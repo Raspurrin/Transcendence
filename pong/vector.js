@@ -21,4 +21,13 @@ export class Vector {
 	{
 		return (this.x * x - this.y * y);
 	}
+	magnitute()
+	{
+		return (Math.sqrt((this.x * this.x) + (this.y * this.y)));
+	}
+	normalize()
+	{
+		this.x = this.x / this.magnitute();
+		this.y = this.y / this.magnitute();
+	}
 }

@@ -9,12 +9,13 @@ export class ball extends InteractiveObject{
 	}
 	randomDirection()
 	{
-		return (Math.floor(Math.random(2 * PI)));
+		this.direction.x = (Math.random() * 2) - 1;
+		this.direction.y = (Math.random() * 2) - 1;
 	}
 	checkInteraction()
 	{
 		if (y == 0 || y == canvas.height)
-			this.direction.Y = -this.direction.Y;
+			this.direction.y = -this.direction.y;
 	}
 	move()
 	{
