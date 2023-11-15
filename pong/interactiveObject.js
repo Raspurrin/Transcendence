@@ -1,29 +1,24 @@
-import { canvas } from "./canvas.js";
+import { Vector } from "./vector.js"
 
 export class InteractiveObject {
-  constructor(x, y, width, height, colour) {
-    this.x = x;
-    this.y = y;
+  constructor(x, y) {
+    this.position = new Vector(x, y);
     this.speed = 1;
-    this.direction = 0;
-    this.width = width;
-    this.height = height;
-	  this.colour = colour;
+    this.direction = new Vector(0, 0);
   }
-  draw() {
-    //console.log("x: ", this.x, "y: ", this.y, "width: ", this.width, 
-    //                "height: ", this.height, "colour: ", this.colour);
-    canvas.ctx.beginPath();
-    canvas.ctx.fillStyle = this.colour;
-    canvas.ctx.fillRect(this.x, this.y, this.width, this.height);
-  }
+  
   move(direction) {
-    console.log(direction);
-    let newY = this.y + (direction * this.speed);
-    // if (newX > this.boundaryBox.x1 && newX < this.boundaryBox.x2)
-    //   this.x += this.direction * this.speed;
-    if (newY > this.boundaryBox.y1 && newY < this.boundaryBox.y2)
-      this.y += direction * this.speed;
+    let newY = this.position.y + (this.direction.y * this.speed);
+	let newX = this.position.x + (this.direction.x * this.speed);
+	//console.log("newY: ", newY, "pos: ", this.position, "dir: ", this.direction);
+	//console.log("calc: ", this.direction.y * this.speed);
+	//console.log(this.position.y);
+	console.log("newX: ", newX, "newY", newY);
+    if (newX >= this.boundaryBox.min.x && newX <= this.boundaryBox.max.x)
+      this.position.x += this.direction.x * this.speed;
+    if (newY >= this.boundaryBox.min.y && newY <= this.boundaryBox.max.y)
+      this.position.y += direction.y * this.speed;
+	console.log("new position: ", this.position);
   }
   setSpeed(newSpeed) {
     this.speed = newSpeed;

@@ -1,9 +1,10 @@
+import { Vector } from "./vector.js"
+
 export class PaddleField {
-  constructor(x1, y1, x2, y2) {
-    this.x1 = x1;
-    this.x2 = x2;
-    this.y1 = y1;
-    this.y2 = y2;
-    this.length = x2 - x1 + y2 - y1;
+  constructor(minX, minY, maxX, maxY) {
+    this.min = new Vector(minX, minY);
+    this.max = new Vector(maxX, maxY);
+	this.centerX = (minX + maxX) / 2;
+	this.centerY = (minY + maxY) / 2
   }
 }
