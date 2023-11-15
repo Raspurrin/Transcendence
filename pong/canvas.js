@@ -10,4 +10,4 @@ class Canvas {
 	}
 }
 
-export var canvas = new Canvas(window.innerWidth, window.innerHeight / 2);
+export var canvas = new Canvas(980, 150);
