@@ -8,17 +8,12 @@ export class InteractiveObject {
   }
   
   move(direction) {
-    let newY = this.position.y + (this.direction.y * this.speed);
-	let newX = this.position.x + (this.direction.x * this.speed);
-	//console.log("newY: ", newY, "pos: ", this.position, "dir: ", this.direction);
-	//console.log("calc: ", this.direction.y * this.speed);
-	//console.log(this.position.y);
-	console.log("newX: ", newX, "newY", newY);
+    let newY = Math.floor(this.position.y + (this.direction.y * this.speed));
+	let newX = Math.floor(this.position.x + (this.direction.x * this.speed));
     if (newX >= this.boundaryBox.min.x && newX <= this.boundaryBox.max.x)
-      this.position.x += this.direction.x * this.speed;
+      this.position.x += Math.floor(this.direction.x * this.speed);
     if (newY >= this.boundaryBox.min.y && newY <= this.boundaryBox.max.y)
-      this.position.y += direction.y * this.speed;
-	console.log("new position: ", this.position);
+      this.position.y += Math.floor(direction.y * this.speed);
   }
   setSpeed(newSpeed) {
     this.speed = newSpeed;

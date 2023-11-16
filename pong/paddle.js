@@ -25,7 +25,6 @@ export class Paddle extends InteractiveObject{
 		window.addEventListener("keydown", (event) => {
 			if (event.key === this.downkey){
 				this.direction.y = 1;
-				console.log("down");
 			}
 			if (event.key === this.upkey){
 				this.direction.y = -1;
