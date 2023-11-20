@@ -9,7 +9,8 @@ export class Paddle extends InteractiveObject {
       center.x - env.PADDLEWIDTH / 2,
       center.y - env.PADDLEHEIGHT / 2,
       env.PADDLEWIDTH,
-      env.PADDLEHEIGHT
+      env.PADDLEHEIGHT,
+      rotation
     );
     this.boundaryBox = boundaryBox;
     this.upkey = upkey;
@@ -21,12 +22,7 @@ export class Paddle extends InteractiveObject {
   setTeam(team) {
     this.team = team;
   }
-  rotate(){
-    let center = this.boundaryBox.getCenter();
-    canvas.ctx.translate(center.x, center.y);
-    canvas.ctx.rotate(this.rotation);
-    canvas.ctx.translate(-center.x, -center.y);
-  }
+
   draw() {
     canvas.ctx.save();
     if (this.rotation != 0)

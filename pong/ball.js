@@ -10,7 +10,7 @@ export class Ball extends InteractiveObject {
       canvas.center.x - env.BALLWIDTH / 2,
       canvas.center.y - env.BALLHEIGHT / 2,
       env.BALLWIDTH,
-      env.BALLHEIGHT
+      env.BALLHEIGHT,
     );
     this.boundaryBox = new Rect(0, 0, canvas.width, canvas.height);
     this.colour = "white";
