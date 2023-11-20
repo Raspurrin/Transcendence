@@ -18,42 +18,54 @@ class GameMode {
 export class VSMode extends GameMode {
   constructor() {
     super();
-    this.paddleField1 = new Rect(0, 0, env.PADDLEWIDTH, canvas.height);
-    this.paddleField2 = new Rect(
-      canvas.width - env.PADDLEWIDTH,
-      0,
-      env.PADDLEWIDTH,
-      canvas.height
-    );
-    this.paddle1 = new Paddle(this.paddleField1, "w", "s", 0);
-    this.paddle2 = new Paddle(this.paddleField2, "z", "x", 180);
-    this.ball = new Ball();
-    this.ball.setRandomDirection();
     this.moveableObjects = new Set();
-    this.moveableObjects.add(this.paddle1);
-    this.moveableObjects.add(this.paddle2);
-    this.moveableObjects.add(this.ball);
-    this.paddle1.draw();
-    this.team1 = new Team("spectacularian");
-    this.team2 = new Team("suckian");
-    this.teams = [this.team1, this.team2];
-    this.team1.addPaddle(this.paddle1);
-    this.team2.addPaddle(this.paddle2);
+    this.balls = [];
+    this.teams = [];
     this.lastHitBall = undefined;
     this.endGameCondition = 2;
     this.gameEnd = false;
+    this.addTeam("spectacularian");
+    this.addTeam("suckian");
+    this.paddleField1 = new Rect(0, 0, env.PADDLEWIDTH, canvas.height);
+    this.paddleField2 = new Rect(canvas.width - env.PADDLEWIDTH, 0, env.PADDLEWIDTH, canvas.height);
+    this.paddleField3 = new Rect(0, 0, canvas.width, env.PADDLEHEIGHT);
+    this.addPaddle(this.teams[0], this.paddleField1, "w", "s", 0);
+    this.addPaddle(this.teams[1], this.paddleField2, "z", "x", 180);
+    this.addPaddle(this.teams[0], this.paddleField3, "c", "v", 90);
+    this.addBall();
+    this.addBall();
   }
-
+  addBall()
+  {
+    let ball = new Ball();
+    ball.setRandomDirection();
+    this.balls.push(ball);
+    this.moveableObjects.add(ball);
+  }
+  addTeam(name)
+  {
+    let team = new Team(name);
+    this.teams.push(team);
+  }
+  addPaddle(something, paddlefield, upkey, downkey, rotation)
+  {
+    let paddle = new Paddle(paddlefield, upkey, downkey, rotation);
+    this.moveableObjects.add(paddle);
+    something.addPaddle(paddle);
+  }
   collision(object) {
-    if (this.ball.hitObject(object)) {
-      this.lastHitBall = object.team;
-    } else if (Rect.collision(object.boundaryBox, this.ball.rect)) {
-      if (this.lastHitBall != undefined) this.lastHitBall.score();
-      else for (const team of this.teams) if (team != object.team) team.score();
-      this.ball.reset();
-      this.lastHitBall = undefined;
-      for (const team of this.teams) console.log(team.name + ": " + team.scoreCount);
-      this.checkEndGameCondition();
+    for (const ball of this.balls)
+    {
+      if (ball.hitObject(object)) {
+        this.lastHitBall = object.team;
+      } else if (Rect.collision(object.boundaryBox, ball.rect)) {
+        if (this.lastHitBall != undefined) this.lastHitBall.score();
+        else for (const team of this.teams) if (team != object.team) team.score();
+        ball.reset();
+        this.lastHitBall = undefined;
+        for (const team of this.teams) console.log(team.name + ": " + team.scoreCount);
+        this.checkEndGameCondition();
+      }
     }
   }
   checkEndGameCondition() {
