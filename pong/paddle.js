@@ -15,7 +15,11 @@ export class Paddle extends InteractiveObject {
     this.upkey = upkey;
     this.downkey = downkey;
     this.colour = "white";
+    this.team = undefined;
 	this.rotation = rotation * (Math.PI / 180);
+  }
+  setTeam(team) {
+    this.team = team;
   }
   rotate(){
     let center = this.boundaryBox.getCenter();

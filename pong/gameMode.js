@@ -2,6 +2,7 @@ import { canvas } from "./canvas.js";
 import { Paddle } from "./paddle.js";
 import { Ball } from "./ball.js";
 import { Rect } from "./Rect.js";
+import { Team } from "./team.js";
 import * as env from "./constants.js";
 
 class GameMode {
@@ -33,15 +34,45 @@ export class VSMode extends GameMode {
     this.moveableObjects.add(this.paddle2);
     this.moveableObjects.add(this.ball);
     this.paddle1.draw();
+    this.team1 = new Team("spectacularian");
+    this.team2 = new Team("suckian");
+    this.teams = [this.team1, this.team2];
+    this.team1.addPaddle(this.paddle1);
+    this.team2.addPaddle(this.paddle2);
+    this.lastHitBall = undefined;
+    this.endGameCondition = 2;
+    this.gameEnd = false;
+  }
+
+  collision(object) {
+    if (this.ball.hitObject(object)) {
+      this.lastHitBall = object.team;
+    } else if (Rect.collision(object.boundaryBox, this.ball.rect)) {
+      if (this.lastHitBall != undefined) this.lastHitBall.score();
+      else for (const team of this.teams) if (team != object.team) team.score();
+      this.ball.reset();
+      this.lastHitBall = undefined;
+      for (const team of this.teams) console.log(team.name + ": " + team.scoreCount);
+      this.checkEndGameCondition();
+    }
+  }
+  checkEndGameCondition() {
+    for (const team of this.teams)
+      if (team.scoreCount >= this.endGameCondition)
+      {
+        console.log(team.name + " wins!");
+        this.gameEnd = true;
+      }
   }
   gameLoop = () => {
     canvas.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     for (const object of this.moveableObjects) {
-      if (object instanceof Paddle) this.ball.hitObject(object);
+      if (object instanceof Paddle) this.collision(object);
       object.checkInteraction();
       object.move();
       object.draw();
     }
-    window.requestAnimationFrame(this.gameLoop);
+    if (this.gameEnd === false)
+      window.requestAnimationFrame(this.gameLoop);
   };
 }

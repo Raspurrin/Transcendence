@@ -21,6 +21,12 @@ export class Ball extends InteractiveObject {
   randomBetween(min, max) {
     return min + Math.random() * (max - min);
   }
+  reset(){
+    this.position.x = canvas.center.x - env.BALLWIDTH / 2;
+    this.position.y = canvas.center.y - env.BALLHEIGHT / 2;
+    this.rect = new Rect(this.position.x, this.position.y, this.width, this.height);
+    this.setRandomDirection();
+  }
   setRandomDirection() {
     let angle = this.randomBetween(-(Math.PI / 4), Math.PI / 4);
     let randomSide = Math.round(Math.random());
@@ -37,7 +43,9 @@ export class Ball extends InteractiveObject {
       let angle = Math.PI * normalizedCollision;
       this.direction.x = Math.cos(angle - (Math.PI / 2 + object.rotation)) * this.speed;
       this.direction.y = Math.sin(angle - (Math.PI / 2 + object.rotation)) * this.speed;
+      return (object.team);
     }
+    return (null);
   }
 
   checkInteraction() {
