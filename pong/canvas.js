@@ -1,15 +1,13 @@
+import { Vector } from "./vector.js";
+
 class Canvas {
-	constructor(
-		width,
-		height
-	){
-		this.width = width;
-		this.height = height;
-		this.canvas = document.querySelector("canvas");
-		this.ctx = this.canvas.getContext("2d");
-		this.centerX = width / 2;
-		this.centerY = height / 2;
-	}
+  constructor() {
+    this.width = document.querySelector("canvas").width;
+    this.height = document.querySelector("canvas").height;
+    this.canvas = document.querySelector("canvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.center = new Vector(this.width / 2, this.height / 2);
+  }
 }
 
-export var canvas = new Canvas(980, 150);
+export var canvas = new Canvas();

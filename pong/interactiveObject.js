@@ -1,24 +1,33 @@
-import { Vector } from "./vector.js"
+import { Vector } from "./vector.js";
+import { Rect } from "./Rect.js";
 
 export class InteractiveObject {
-  constructor(x, y) {
+  constructor(x, y, width, height) {
     this.position = new Vector(x, y);
-    this.speed = 1;
+    this.speed = 2;
     this.direction = new Vector(0, 0);
+    this.width = width;
+    this.height = height;
+    this.rect = new Rect(x, y, width, height);
   }
-  
+
   move(direction) {
-    let newY = Math.floor(this.position.y + (this.direction.y * this.speed));
-	let newX = Math.floor(this.position.x + (this.direction.x * this.speed));
-    if (newX >= this.boundaryBox.min.x && newX <= this.boundaryBox.max.x)
-      this.position.x += Math.floor(this.direction.x * this.speed);
-    if (newY >= this.boundaryBox.min.y && newY <= this.boundaryBox.max.y)
-      this.position.y += Math.floor(direction.y * this.speed);
+    // Allows "sliding" when only one component of the direction vector goes out of
+    let newY = this.position.y + Math.floor(this.direction.y * this.speed);
+    let newX = this.position.x + Math.floor(this.direction.x * this.speed);
+    if (newX >= this.boundaryBox.left && newX + this.width <= this.boundaryBox.right) {
+      this.position.x = newX;
+      this.rect.setX(newX);
+    }
+    if (newY >= this.boundaryBox.top && newY + this.height <= this.boundaryBox.bottom) {
+      this.position.y = newY;
+      this.rect.setY(newY);
+    }
   }
   setSpeed(newSpeed) {
     this.speed = newSpeed;
   }
-	checkInteraction(){
-		throw new Error("Method checkInteraction() must be implemented.");
-	}
+  checkInteraction() {
+    throw new Error("Method checkInteraction() must be implemented.");
+  }
 }
