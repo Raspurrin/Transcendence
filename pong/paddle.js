@@ -29,12 +29,7 @@ export class Paddle extends InteractiveObject {
       this.rotate();
     canvas.ctx.beginPath();
     canvas.ctx.fillStyle = this.colour;
-    canvas.ctx.fillRect(
-      this.position.x,
-      this.position.y,
-      this.width,
-      this.height
-    );
+    canvas.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     canvas.ctx.restore();
   }
   checkInteraction() {

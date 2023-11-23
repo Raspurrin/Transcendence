@@ -21,26 +21,17 @@ export class InteractiveObject {
     // Allows "sliding" when only one component of the direction vector goes out of
     let newY = this.position.y + Math.floor(this.direction.y * this.speed);
     let newX = this.position.x + Math.floor(this.direction.x * this.speed);
-    if (
-      newX >= this.boundaryBox.left &&
-      newX + this.width <= this.boundaryBox.right
-    ) {
+    if (newX >= this.boundaryBox.left && newX + this.width <= this.boundaryBox.right) {
       this.position.x = newX;
       this.rect.setX(newX);
     }
-    if (
-      newY >= this.boundaryBox.top &&
-      newY + this.height <= this.boundaryBox.bottom
-    ) {
+    if (newY >= this.boundaryBox.top && newY + this.height <= this.boundaryBox.bottom) {
       this.position.y = newY;
       this.rect.setY(newY);
-    } else
-      console.log(
-        "out of bounds: ",
-        newY,
-        newY + this.height,
-        this.boundaryBox.bottom
-      );
+    } else {
+       this.position.y = newY;
+       this.rect.setY(newY);
+    }
   }
   setSpeed(newSpeed) {
     this.speed = newSpeed;

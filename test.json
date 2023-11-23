@@ -1,0 +1,20 @@
+{
+	"circle" : {
+		"position": 2,
+		"rotation": 3,
+		"scale": 4
+	},
+	"rectangle" : {
+		"position": 5,
+		"rotation": 6,
+		"scale": 7
+	},
+	"teams" : {
+		"spectacularian" : {
+			"score": 2
+		},
+		"suckian" : {
+			"score": 1
+		}
+	}
+}

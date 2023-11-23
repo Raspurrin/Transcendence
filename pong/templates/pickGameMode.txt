@@ -1,0 +1,8 @@
+<form>
+	<label>Pick a game mode: </label>
+	<select>
+		<option value="tournament">Tournament</option>
+		<option value="vsMode">VS Mode</option>
+	</select>
+	<input type="submit" value="Start Game">
+</form>

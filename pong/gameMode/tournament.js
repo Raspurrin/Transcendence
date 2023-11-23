@@ -17,6 +17,7 @@ export class Tournament extends GameMode {
     this.addPaddle(this.teams[0], this.paddleField1, "w", "s", 0);
     this.addPaddle(this.teams[1], this.paddleField2, "z", "x", 180);
     this.addBall();
+    this.pickingOptions();
   }
   gameMode() {}
 }
